@@ -1,11 +1,19 @@
+// import { type } from '@testing-library/user-event/dist/type';
 import React, { useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
 import './Form.css';
 const Form = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
+  // const {name} = useSelector(state => state)
+  // const {number} = useSelector(state => state)
+
+  // const dispatch = useDispatch();
+
   const handleChange = evt => {
     const { name, value } = evt.target;
+
     switch (name) {
       case 'name':
         setName(value);
@@ -21,6 +29,8 @@ const Form = ({ onSubmit }) => {
   const handleSubmit = evt => {
     evt.preventDefault();
     onSubmit({ name, number });
+    // dispatch({ type: 'name', paylod: name });
+    // dispatch({ type: 'number', payload: number });
     setName('');
     setNumber('');
   };
@@ -61,3 +71,5 @@ const Form = ({ onSubmit }) => {
   );
 };
 export default Form;
+
+

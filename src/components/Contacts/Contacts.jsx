@@ -1,16 +1,27 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import './contacts.css';
+import { autorun } from 'mobx';
 
-const Contacts = props => {
-  const { contacts, removeContact } = props;
+import './contacts.css';
+import store from '../../stores/index';
+
+const Contacts = observer(() => {
+  const { contacts } = store;
+
+  autorun(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts.getFiltered('')));
+  });
 
   return (
     <ul className="contacts">
-      {contacts.map(contact => (
+      {contacts.getFiltered().map(contact => (
         <React.Fragment key={contact.id}>
           <li className="contactsList">
             {contact.name}: {contact.number}{' '}
-            <button className="delete" onClick={() => removeContact(contact.id)}>
+            <button
+              className="delete"
+              onClick={() => contacts.removeContact(contact)}
+            >
               Delete
             </button>
           </li>
@@ -18,6 +29,6 @@ const Contacts = props => {
       ))}
     </ul>
   );
-};
+});
 
 export default Contacts;
